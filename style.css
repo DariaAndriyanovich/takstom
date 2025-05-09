@@ -1,0 +1,283 @@
+/* General Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: #222;
+  background-color: #fff;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.btn.primary {
+  background-color: #003366;
+  color: white;
+}
+
+.btn.secondary {
+  background-color: white;
+  color: #003366;
+  border: 2px solid #003366;
+}
+
+.btn.orange {
+  background-color: #ff6600;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+/* Hero Section */
+.hero {
+  background: url('img/tallinn-bg.jpg') no-repeat center center/cover;
+  height: 100vh;
+  position: relative;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero .overlay {
+  background-color: rgba(0,0,0,0.6);
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Calculator */
+.calculator {
+  background: #f4f4f4;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.calculator form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.calculator input,
+.calculator select {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  flex: 1 1 180px;
+}
+
+#price-result {
+  margin-top: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Popular Routes */
+.routes {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.routes h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.route-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.route-card {
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  min-width: 200px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.route-card img {
+  width: 70px;
+}
+
+/* Fleet */
+.fleet {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.fleet-list {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.fleet-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 200px;
+}
+
+.fleet-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Tours */
+.tours {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.tours-text, .tours-img {
+  flex: 1 1 400px;
+}
+
+.tours-img img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Booking and Contact */
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* центрирование блоков */
+  gap: 4rem;
+  padding: 3rem 2rem;
+  background: #f9f9f9;
+  text-align: left;
+}
+
+.booking, .contact {
+  flex: 1 1 400px;
+}
+
+.booking form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.booking input, .booking select {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.contact-map {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+footer {
+  background: #eee;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .calculator form {
+    flex-direction: column;
+  }
+
+  .route-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fleet-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tours {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .booking, .contact {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .tours-img img, .contact-map {
+    height: auto;
+    max-width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
