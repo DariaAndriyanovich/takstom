@@ -229,55 +229,35 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .hero h1 {
-    font-size: 1.8rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  .calculator form {
-    flex-direction: column;
-  }
-
-  .route-list {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .fleet-list {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .tours {
-    flex-direction: column;
-    text-align: center;
-  }
-
+  .hero-buttons,
+  .calculator form,
+  .route-list,
+  .fleet-list,
+  .tours,
   .bottom {
     flex-direction: column;
     align-items: center;
   }
 
-  .booking, .contact {
+  .route-card,
+  .fleet-card,
+  .form-input,
+  .contact-info {
     width: 100%;
-    max-width: 100%;
+    margin-bottom: 1rem;
   }
 
-  .tours-img img, .contact-map {
-    height: auto;
-    max-width: 100%;
+  .calculator,
+  .bottom {
+    flex-direction: column;
   }
 
-  .btn {
+  .contact-info iframe {
     width: 100%;
-    text-align: center;
+    height: 250px;
+  }
+
+  .hero-buttons button {
+    width: 100%;
   }
 }
