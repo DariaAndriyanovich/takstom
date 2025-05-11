@@ -30,18 +30,18 @@
   </header>
 
   <section class="calculator" id="book">
+    <h2>Check Transfer price</h2>
     <form id="transfer-form">
-      <input type="text" placeholder="From" name="from" required />
-      <input type="text" placeholder="To" name="to" required />
-      <input type="datetime-local" name="time" required />
-      <select name="vehicle" required>
+      <input id="from" type="text" placeholder="From" required />
+      <input id="to" type="text" placeholder="To" required />
+      <select id="car-type">
         <option value="standard">Standard</option>
-        <option value="xl">XL</option>
         <option value="business">Business</option>
+        <option value="minibus">Minibus</option>
       </select>
-      <button type="submit" class="btn primary">Calculate Price</button>
+      <button type="submit">Calculate Price</button>
     </form>
-    <div id="price-result"></div>
+    <div id="price-output"></div>
   </section>
 
   <section class="routes">
@@ -196,7 +196,10 @@
     </p>
   </footer>
 
-  <script src="script.js"></script>
 </body>
-
+<script src="script.js"></script>
+<script
+  async
+  defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhSADBcM4V4xbbbjJBiP_r5r0hjkwXic&libraries=places&callback=initAutocomplete"></script>
 </html>
