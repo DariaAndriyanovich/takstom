@@ -220,6 +220,10 @@ body, html {
   margin-bottom: 1rem;
 }
 
+.contacts {
+  text-decoration: none;
+}
+
 footer {
   background: #eee;
   padding: 1rem 2rem;
@@ -227,6 +231,7 @@ footer {
   font-size: 0.9rem;
   color: #555;
 }
+
 
 @media (max-width: 768px) {
   .hero-buttons,
