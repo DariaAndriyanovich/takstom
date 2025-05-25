@@ -95,3 +95,28 @@ function calculateRoute(event) {
 
 document.getElementById("transfer-form").addEventListener("submit", calculateRoute);
 
+document.getElementById('booking-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const formData = new FormData(form);
+
+  fetch('https://formsubmit.co/ajax/your@email.com', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json'
+    },
+    body: formData
+  })
+    .then(response => {
+      if (response.ok) {
+        document.getElementById('booking-message').style.display = 'block';
+        form.reset();
+      } else {
+        alert('There was an error. Please try again.');
+      }
+    })
+    .catch(error => {
+      alert('Failed to send. Check your internet or try again later.');
+    });
+});
