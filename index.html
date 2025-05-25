@@ -42,7 +42,7 @@
         <option value="business">Business</option>
         <option value="minibus">Minibus</option>
       </select>
-      <button type="submit">Calculate Price</button>
+      <button class="btn" type="submit">Calculate Price</button>
     </form>
     <div id="price-output"></div>
   </section>
@@ -143,26 +143,23 @@
       <h3>
         Book a Transfer
       </h3>
-      <form>
-        <input type="text" placeholder="From" />
-        <input type="text" placeholder="To" />
-        <input type="date" />
-        <input type="time" />
-        <select>
-          <option>
-            Standard
-          </option>
-          <option>
-            XL
-          </option>
-          <option>
-            Business
-          </option>
-        </select>
-        <button class="btn orange">
-          Get a Quote
-        </button>
-      </form>
+      <form action="https://formsubmit.com/transway24.ee@gmail.com" method="POST" id="booking-form">
+  <input type="text" name="from" placeholder="From" required>
+  <input type="text" name="to" placeholder="To" required>
+  <input type="date" name="date" required>
+  <input type="time" name="time" required>
+  <select name="car-type">
+    <option value="Standard">Standard</option>
+    <option value="XL">XL</option>
+    <option value="Business">Business</option>
+  </select>
+
+  <!-- Настройки Formsubmit -->
+  <input type="hidden" name="_subject" value="New Transfer Booking!">
+  <input type="hidden" name="_next" value="https://dariaandriyanovich.github.io/thank-you.html">
+
+  <button class="btn" type="submit">Send Request</button>
+</form>
     </div>
     <div class="contact">
       <h3>
