@@ -73,6 +73,21 @@ body, html {
   gap: 1rem;
 }
 
+#language-select {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000;
+  border: 1px solid #ccc;
+  z-index: 9999;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
 /* Calculator */
 .calculator {
   background: #f4f4f4;
