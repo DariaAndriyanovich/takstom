@@ -1,87 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css" />
+  <title>Tallinn & Estonia Tours</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
     }
 
-    header {
-      background-image: url('img/tallinn-bg.jpg');
-      background-size: cover;
+    .tour-hero {
+      position: relative;
+      background: url('img/tallinn-bg.jpg') no-repeat center/cover;
+      height: 60vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       color: white;
-      padding: 100px 20px;
+    }
+
+    .tour-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+
+    .tour-hero-content {
+      position: relative;
+      z-index: 1;
       text-align: center;
+      padding: 0 1rem;
     }
 
-    .btn {
-      background-color: #ff6600;
+    .tour-hero h1 {
+      font-size: 2rem;
+      margin: 0 0 0.5rem;
+    }
+
+    .tour-hero p {
+      font-size: 1.1rem;
+    }
+
+    .back-btn {
+      background: #ff6600;
       color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 8px;
       text-decoration: none;
+      font-weight: bold;
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 1rem;
     }
 
-    .btn:hover {
-      background-color: #e95c00;
+    @media (max-width: 768px) {
+      .tour-hero h1 {
+        font-size: 1.5rem;
+      }
+
+      .tour-hero p {
+        font-size: 1rem;
+      }
+
+      .back-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
     }
 
-    main {
-      padding: 40px 20px;
+    .tour-coming {
+      padding: 2rem 1rem;
+      text-align: center;
+      max-width: 700px;
       margin: 0 auto;
     }
 
-    main h2 {
-      text-align: center;
-      margin-top: 0;
+    .tour-coming h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
     }
 
-    .tour-list li {
-      margin-bottom: 15px;
-    }
-
-    footer {
-      background-color: #f0f0f0;
-      padding: 20px;
-      text-align: center;
+    .tour-coming p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #333;
     }
   </style>
-  <title>Tallinn and Estonia Tours</title>
 </head>
-
 <body>
-  <header>
-    <h1>Tallinn & Estonia Tours</h1>
-    <p>Discover the best sights with our guided tours in Tallinn and beyond!</p>
-    <a href="index.html" class="btn">← Back to Home</a>
-  </header>
-
-
-  <main>
-    <h2>Coming Soon!</h2>
-    <div class="coming-soon">
-      <p>We're working on exciting guided tours across Tallinn and all over Estonia! 🧭🏰🌲</p>
-      <p>Stay tuned — our tours will be available very soon. Get ready to explore hidden gems and iconic landmarks with
-        us!</p>
+  <div class="tour-hero">
+    <div class="tour-hero-content">
+      <h1>Tallinn & Estonia Tours</h1>
+      <p>Discover the best sights with our guided tours in Tallinn and beyond!</p>
+      <a href="index.html" class="btn back-btn">&larr; Back to Home</a>
     </div>
-  </main>
+  </div>
 
-  <footer>
-    <p>&copy; 2025 Transway24. All rights reserved.</p>
-  </footer>
+  <section class="tour-coming">
+    <h2>Coming Soon!</h2>
+    <p>
+      We're working on exciting guided tours across Tallinn and all over Estonia! 🏯👫🌳<br><br>
+      Stay tuned &mdash; our tours will be available very soon. Get ready to explore hidden gems and iconic landmarks with us!
+    </p>
+  </section>
 </body>
-
-</html>
-</body>
-
 </html>
