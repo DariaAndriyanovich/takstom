@@ -101,7 +101,7 @@ document.getElementById('booking-form').addEventListener('submit', function (e) 
   const form = e.target;
   const formData = new FormData(form);
 
-  fetch('https://formsubmit.co/ajax/your@email.com', {
+  fetch('https://formsubmit.co/ajax/transway24.info@gmail.com', {
     method: 'POST',
     headers: {
       'Accept': 'application/json'
