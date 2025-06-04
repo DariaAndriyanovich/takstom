@@ -44,15 +44,15 @@ function calculateRoute(event) {
       const durationText = element.duration.text;
 
       const fixedRoutes = {
-        "tallinn-narva": { standard: 180, xl: 230, business: 250 },
-        "tallinn-koidula": { standard: 280, xl: 320, business: 330 },
-        "tallinn-parnu": { standard: 110, xl: 150, business: 150 },
-        "tallinn-tartu": { standard: 160, xl: 200, business: 210 },
-        "tallinn-riga": { standard: 280, xl: 320, business: 320 },
-        "tallinn-vilnius": { standard: 580, xl: 600, business: 650 },
-        "riga-narva": { standard: 450, xl: 550, business: 600 },
-        "riga-luhamaa": { standard: 280, xl: 300, business: 330 },
-        "riga-koidula": { standard: 300, xl: 320, business: 350 },
+        "tallinn-narva": { standard: 180, minibus: 230, business: 250 },
+        "tallinn-koidula": { standard: 280, minibus: 320, business: 330 },
+        "tallinn-parnu": { standard: 110, minibus: 150, business: 150 },
+        "tallinn-tartu": { standard: 160, minibus: 200, business: 210 },
+        "tallinn-riga": { standard: 280, minibus: 320, business: 320 },
+        "tallinn-vilnius": { standard: 580, minibus: 600, business: 650 },
+        "riga-narva": { standard: 450, minibus: 550, business: 600 },
+        "riga-luhamaa": { standard: 280, minibus: 300, business: 330 },
+        "riga-koidula": { standard: 300, minibus: 320, business: 350 },
       };
 
       const fromLower = origin.toLowerCase();
@@ -101,7 +101,7 @@ document.getElementById('booking-form').addEventListener('submit', function (e) 
   const form = e.target;
   const formData = new FormData(form);
 
-  fetch('https://formsubmit.co/ajax/transway24.info@gmail.com', {
+  fetch('https://formsubmit.co/ajax/takstom.info@gmail.com', {
     method: 'POST',
     headers: {
       'Accept': 'application/json'
@@ -119,4 +119,108 @@ document.getElementById('booking-form').addEventListener('submit', function (e) 
     .catch(error => {
       alert('Failed to send. Check your internet or try again later.');
     });
+});
+
+const translations = {
+  en: {
+    title: "TaksTom",
+    tagline: "Fast, Safe, Convenient",
+    desc: "Book transfers in Tallinn and all over Estonia",
+    book: "Book a Transfer",
+    check: "Check Price",
+    checkTitle: "Check Transfer price",
+    routesTitle: "Popular Routes",
+    fleetTitle: "Our Fleet",
+    standard: "Standard",
+    minibus: "Minibus",
+    business: "Business",
+    standardDesc: "Up to 3 passengers and 3 pieces luggage",
+    minibusDesc: "Up to 8 passengers and 3 pieces luggage",
+    businessDesc: "Up to 3 passengers and 3 pieces luggage",
+    toursTitle: "Tallinn and Estonia Tours",
+    toursDesc: "Discover the best of Tallinn and Estonia with our sightseeing tours.",
+    learnMore: "Learn More",
+    bookFormTitle: "Book a Transfer",
+    contactTitle: "Contact Us",
+    send: "Send Request",
+    toursTitle: "Tallinn & Estonia Tours",
+    toursDesc: "Discover the best sights with our guided tours in Tallinn and beyond!",
+    backHome: "← Back to Home",
+    comingTitle: "Coming Soon!",
+    comingText: "We're working on exciting guided tours across Tallinn and all over Estonia!Stay tuned — our tours will be available very soon. Get ready to explore hidden gems and iconic landmarks with us!",
+  },
+  ru: {
+    title: "TaksTom",
+    tagline: "Быстро, безопасно, удобно",
+    desc: "Закажите трансфер по Таллинну и всей Эстонии",
+    book: "Заказать трансфер",
+    check: "Рассчитать цену",
+    checkTitle: "Рассчитать цену трансфера",
+    routesTitle: "Популярные маршруты",
+    fleetTitle: "Наш автопарк",
+    standard: "Стандарт",
+    minibus: "Минивэн",
+    business: "Бизнес",
+    standardDesc: "До 3 пассажиров и 3 места для багажа",
+    minibusDesc: "До 8 пассажиров и 3 места для багажа",
+    businessDesc: "До 3 пассажиров и 3 места для багажа",
+    toursTitle: "Туры по Таллинну и Эстонии",
+    toursDesc: "Откройте для себя Таллинн и Эстонию с нашими экскурсионными турами.",
+    learnMore: "Подробнее",
+    bookFormTitle: "Заказать трансфер",
+    contactTitle: "Контакты",
+    send: "Отправить заявку",
+    toursTitle: "Туры по Таллинну и Эстонии",
+    toursDesc: "Откройте лучшие достопримечательности Таллинна и всей Эстонии вместе с нами!",
+    backHome: "← Назад на главную",
+    comingTitle: "Скоро!",
+  },
+  et: {
+    title: "TaksTom",
+    tagline: "Kiire, turvaline, mugav",
+    desc: "Broneeri transfeer Tallinnas ja üle Eesti",
+    book: "Broneeri transfeer",
+    check: "Arvuta hind",
+    checkTitle: "Arvuta transfeeri hind",
+    routesTitle: "Populaarsed marsruudid",
+    fleetTitle: "Meie autopark",
+    standard: "Standard",
+    minibus: "Minibuss",
+    business: "Äriklass",
+    standardDesc: "Kuni 3 reisijat ja 3 pagasikohta",
+    minibusDesc: "Kuni 8 reisijat ja 3 pagasikohta",
+    businessDesc: "Kuni 3 reisijat ja 3 pagasikohta",
+    toursTitle: "Tallinna ja Eesti ekskursioonid",
+    toursDesc: "Avasta Tallinna ja Eesti parimad paigad meiega.",
+    learnMore: "Loe lähemalt",
+    bookFormTitle: "Broneeri transfer",
+    contactTitle: "Võta meiega ühendust",
+    send: "Saada päring",
+    toursTitle: "Tallinna ja Eesti ekskursioonid",
+    toursDesc: "Avasta Tallinna ja kogu Eesti parimad paigad meie giidiga ekskursioonidega!",
+    backHome: "← Tagasi avalehele",
+    comingTitle: "Varsti saadaval!",
+  }
+};
+
+function setLanguage(lang) {
+  const elements = document.querySelectorAll("[data-i18n]");
+  elements.forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setLanguage("en");
+
+  const langSelect = document.getElementById("language-select");
+  if (langSelect) {
+    langSelect.addEventListener("change", (e) => {
+      const selectedLang = e.target.value;
+      setLanguage(selectedLang);
+    });
+  }
 });

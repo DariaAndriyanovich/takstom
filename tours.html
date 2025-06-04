@@ -14,7 +14,7 @@
 
     .tour-hero {
       position: relative;
-      background: url('img/tallinn-bg.jpg') no-repeat center/cover;
+      background: url('img/lahemaa.jpg') no-repeat center/cover;
       height: 60vh;
       display: flex;
       justify-content: center;
@@ -109,18 +109,39 @@
 </head>
 
 <body>
+
+    <select id="language-select">
+    <option value="en">
+      English
+    </option>
+    <option value="ru">
+      Русский
+    </option>
+    <option value="et">
+      Eesti
+    </option>
+  </select>
+
   <div class="tour-hero">
     <div class="tour-hero-content">
-      <h1>Tallinn & Estonia Tours</h1>
-      <p>Discover the best sights with our guided tours in Tallinn and beyond!</p>
-      <a href="index.html" class="btn primary back-btn">&larr; Back to Home</a>
+      <h1 data-i18n="toursTitle">
+        Tallinn & Estonia Tours
+      </h1>
+      <p>
+        Discover the best sights with our guided tours in Tallinn and beyond!
+      </p>
+      <a data-i18n="backHome" href="index.html" class="btn primary back-btn">
+        Back to Home
+      </a>
     </div>
   </div>
 
   <section class="tour-coming">
     <div class="container">
-      <h2>Coming Soon!</h2>
-      <p>
+      <h2 data-i18n="comingTitle">
+        Coming Soon!
+      </h2>
+      <p data-i18n="comingText">
         We're working on exciting guided tours across Tallinn and all over Estonia! 🏯👫🌳<br><br>
         Stay tuned &mdash; our tours will be available very soon. Get ready to explore hidden gems and iconic landmarks
         with us!
@@ -132,7 +153,9 @@
     <p>
       We value quality. Book your comfortable transfer quickly and easily. Therefore, we use cookies. If you continue
       to use this site, we will assume that you agree to it. <br>
-    <p>&copy; 2025 Transway24. All rights reserved.</p>
+    <p>
+      2025 TaksTom. All rights reserved.
+    </p>
     </p>
   </footer>
 </body>

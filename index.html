@@ -4,33 +4,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Transway24</title>
+  <title>TaksTom</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
   <select id="language-select">
-  <option value="en">English</option>
-  <option value="ru">Русский</option>
-  <option value="et">Eesti</option>
-</select>
+    <option value="en">
+      English
+    </option>
+    <option value="ru">
+      Русский
+    </option>
+    <option value="et">
+      Eesti
+    </option>
+  </select>
 
   <header class="hero">
     <div class="overlay">
+      <img src="img/logo.svg" alt="TaksTom logo" class="site-logo">
       <h1 data-i18n="title">
-        Transway24
+        TaksTom
       </h1>
-      <p>
+      <p data-i18n="tagline">
         Fast, Safe, Convenient
       </p>
       <p data-i18n="desc">
         Book transfers in Tallinn and all over Estonia
       </p>
       <div class="hero-buttons">
-        <a href="#booking" class="btn primary">
+        <a data-i18n="book" href="#booking" class="btn primary">
           Book a Transfer
         </a>
-        <a href="#book" class="btn secondary">
+        <a data-i18n="check" href="#book" class="btn secondary">
           Check Price
         </a>
       </div>
@@ -38,24 +46,34 @@
   </header>
 
   <section class="calculator" id="book">
-    <h2>Check Transfer price</h2>
+    <h2 data-i18n="checkTitle">
+      Check Transfer price
+    </h2>
     <form id="transfer-form">
       <input id="from" type="text" placeholder="From" required />
       <input id="to" type="text" placeholder="To" required />
       <select id="car-type">
-        <option value="standard">Standard</option>
-        <option value="business">Business</option>
-        <option value="minibus">Minibus</option>
+        <option data-i18n="standard" value="standard">
+          Standard
+        </option>
+        <option data-i18n="business" value="business">
+          Business
+        </option>
+        <option data-i18n="minibus" value="minibus">
+          Minibus
+        </option>
       </select>
-      <button class="btn" type="submit">Calculate Price</button>
+      <button data-i18n="check" class="btn" type="submit">
+        Calculate Price
+      </button>
     </form>
-    <div id="price-output"></div>
+    <div id="price-output">
+    </div>
   </section>
 
   <section class="routes">
-    <h2>
+    <h2 data-i18n="routesTitle">
       Popular Routes
-
     </h2>
     <div class="route-list">
       <div class="route-card">
@@ -94,35 +112,38 @@
   </section>
 
   <section class="fleet">
-    <h2>
+    <h2 data-i18n="fleetTitle">
       Our Fleet
     </h2>
     <div class="fleet-list">
       <div class="fleet-card">
         <img src="img/standart.jpg" alt="Standard Taxi">
-        <p>
+        <p data-i18n="standard">
           <strong>
             Standard
           </strong>
-          <br>Up to 3 passengers<br>3 pieces luggage
+        <p data-i18n="standardDesc">
+        </p>
         </p>
       </div>
       <div class="fleet-card">
-        <img src="img/xl.jpg" alt="XL Taxi">
-        <p>
+        <img src="img/minibus.png" alt="Minibus">
+        <p data-i18n="minibus">
           <strong>
-            XL
+            Minibus
           </strong>
-          <br>Up to 6 passengers<br>3 pieces luggage
+        <p data-i18n="minibusDesc">
+        </p>
         </p>
       </div>
       <div class="fleet-card">
         <img src="img/business.jpg" alt="Business Taxi">
-        <p>
+        <p data-i18n="business">
           <strong>
             Business
           </strong>
-          <br>Up to 3 passengers<br>3 pieces luggage
+        <p data-i18n="businessDesc">
+        </p>
         </p>
       </div>
     </div>
@@ -130,13 +151,13 @@
 
   <section class="tours">
     <div class="tours-text">
-      <h2>
+      <h2 data-i18n="toursTitle">
         Tallinn and Estonia Tours
       </h2>
-      <p>
+      <p data-i18n="toursDesc">
         Discover the best of Tallinn and Estonia with our sightseeing tours.
       </p>
-      <a href="tours.html" class="btn orange">Learn More</a>
+      <a data-i18n="learnMore" href="tours.html" class="btn orange">Learn More</a>
     </div>
     <div class="tours-img">
       <img src="img/tallinn-tour.jpg" alt="Tallinn" />
@@ -145,29 +166,38 @@
 
   <section class="bottom">
     <div class="booking" id="booking">
-      <h3>
+      <h3 data-i18n="bookFormTitle">
         Book a Transfer
-        <form id="booking-form">
-          <input type="text" name="name" placeholder="Full Name" required>
-          <input type="tel" name="phone" placeholder="Phone Number" required>
-          <input type="text" name="from" placeholder="From" required>
-          <input type="text" name="to" placeholder="To" required>
-          <input type="date" name="date" required>
-          <input type="time" name="time" required>
-          <select name="car-type">
-            <option value="Standard">Standard</option>
-            <option value="XL">XL</option>
-            <option value="Business">Business</option>
-          </select>
-          <button class="btn" type="submit">Send Request</button>
-        </form>
+      </h3>
+      <form id="booking-form">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="tel" name="phone" placeholder="Phone Number" required>
+        <input type="text" name="from" placeholder="From" required>
+        <input type="text" name="to" placeholder="To" required>
+        <input type="date" name="date" required>
+        <input type="time" name="time" required>
+        <select name="car-type">
+          <option value="Standard">
+            Standard
+          </option>
+          <option value="XL">
+            Minibus
+          </option>
+          <option value="Business">
+            Business
+          </option>
+        </select>
+        <button data-i18n="send" class="btn" type="submit">
+          Send Request
+        </button>
+      </form>
 
-        <div id="booking-message" style="display: none; margin-top: 15px; color: green; font-weight: bold;">
-          Thank you! Your request has been sent.
-        </div>
+      <div id="booking-message" style="display: none; margin-top: 15px; color: green; font-weight: bold;">
+        Thank you! Your request has been sent.
+      </div>
     </div>
     <div class="contact">
-      <h3>
+      <h3 data-i18n="contactTitle">
         Contact Us
       </h3>
       <p>
@@ -176,20 +206,19 @@
           width="100%" height="250" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade">
         </iframe>
-
       </p>
       <p>
         <a class="contacts" href="tel:+372 1234 5678">
-          📞 +372 1234 5678
+          📞 +372 5593 5910
         </a>
       </p>
       <p>
         <a class="contacts" href="mailto:transway24.info@gmail.com">
-          📧 transway24.info@gmail.com
+          📧 takstom.info@gmail.com
         </a>
       </p>
       <p>
-        💬 WhatsApp · Telegram
+        💬 WhatsApp · Telegram · Viber
       </p>
     </div>
   </section>
@@ -198,7 +227,9 @@
     <p>
       We value quality. Book your comfortable transfer quickly and easily. Therefore, we use cookies. If you continue
       to use this site, we will assume that you agree to it. <br>
-      <p>&copy; 2025 Transway24. All rights reserved.</p>
+    <p>
+      2025 TaksTom. All rights reserved.
+    </p>
     </p>
   </footer>
 
