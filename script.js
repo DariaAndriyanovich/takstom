@@ -170,7 +170,7 @@ const translations = {
     contactTitle: "Võta meiega ühendust",
     send: "Saada päring",
     toursTitle: "Tallinna ja Eesti ekskursioonid",
-    toursDesc: "Avasta Tallinna ja kogu Eesti parimad paigad meie giidiga ekskursioonidega!",
+    toursDesc: "Avasta Tallinna ja kogu Eesti parimad paigad meiega!",
     backHome: "← Tagasi avalehele",
     comingTitle: "Varsti saadaval!",
   }
