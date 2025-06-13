@@ -197,3 +197,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  setLanguage("en");
+
+  const langSelect = document.getElementById("language-select");
+  if (langSelect) {
+    langSelect.addEventListener("change", (e) => {
+      const selectedLang = e.target.value;
+      setLanguage(selectedLang);
+    });
+  }
+
+  const form = document.getElementById("booking-form");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = {};
+
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+
+    fetch("https://script.google.com/macros/s/AKfycby1yLMnHl6yKVSMmdtieUGibVfA1Ra7-kU3PgFgkLmtI-5rSsWPt78UryYNkibdTH9x/exec", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+    .then(res => res.text())
+    .then(response => {
+      console.log(response);
+      alert("Спасибо! Ваша заявка отправлена.");
+      form.reset();
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Произошла ошибка. Попробуйте позже.");
+    });
+  });
+});
