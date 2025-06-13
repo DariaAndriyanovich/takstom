@@ -222,17 +222,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetch("https://script.google.com/macros/s/AKfycby1yLMnHl6yKVSMmdtieUGibVfA1Ra7-kU3PgFgkLmtI-5rSsWPt78UryYNkibdTH9x/exec", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(data),
     })
-    .then(res => res.text())
-    .then(response => {
-      console.log(response);
-      alert("Спасибо! Ваша заявка отправлена.");
-      form.reset();
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Произошла ошибка. Попробуйте позже.");
-    });
+      .then(res => res.text())
+      .then(response => {
+        console.log(response);
+        alert("Спасибо! Ваша заявка отправлена.");
+        form.reset();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Произошла ошибка. Попробуйте позже.");
+      });
   });
 });
