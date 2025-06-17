@@ -130,6 +130,8 @@ const translations = {
     backHome: "← Back to Home",
     comingTitle: "Coming Soon!",
     comingText: "We're working on exciting guided tours across Tallinn and all over Estonia!Stay tuned — our tours will be available very soon. Get ready to explore hidden gems and iconic landmarks with us!",
+    minibusBusiness:"Minibus Business",
+    minibusBusinessDesc:"Up to 5 passengers and 5 pieces luggage"
   },
   ru: {
     title: "TaksTom",
@@ -156,6 +158,8 @@ const translations = {
     toursDesc: "Откройте лучшие достопримечательности Таллинна и всей Эстонии вместе с нами!",
     backHome: "← Назад на главную",
     comingTitle: "Скоро!",
+    minibusBusiness:"Минивэн Бизнес",
+    minibusBusinessDesc:"До 5 пассажиров и 5 места для багажа"
   },
   et: {
     title: "TaksTom",
@@ -182,6 +186,8 @@ const translations = {
     toursDesc: "Avasta Tallinna ja kogu Eesti parimad paigad meiega!",
     backHome: "← Tagasi avalehele",
     comingTitle: "Varsti saadaval!",
+    minibusBusiness:"Äriklassi minibuss",
+    minibusBusinessDesc:"Kuni 5 reisijat ja 5 pagasikohta"
   }
 };
 
