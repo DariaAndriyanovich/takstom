@@ -45,14 +45,23 @@ function calculateRoute(event) {
 
       const fixedRoutes = {
         "tallinn-narva": { standard: 180, minibus: 230, business: 250 },
+        "narva-tallinn": { standard: 180, minibus: 230, business: 250 },
         "tallinn-koidula": { standard: 280, minibus: 320, business: 330 },
+        "koidula-tallinn": { standard: 280, minibus: 320, business: 330 },
         "tallinn-parnu": { standard: 110, minibus: 150, business: 150 },
+        "parnu-tallinn": { standard: 110, minibus: 150, business: 150 },
         "tallinn-tartu": { standard: 160, minibus: 200, business: 210 },
+        "tartu-tallinn": { standard: 160, minibus: 200, business: 210 },
         "tallinn-riga": { standard: 280, minibus: 320, business: 320 },
+        "riga-tallinn": { standard: 280, minibus: 320, business: 320 },
         "tallinn-vilnius": { standard: 580, minibus: 600, business: 650 },
+        "vilnius-tallinn": { standard: 580, minibus: 600, business: 650 },
         "riga-narva": { standard: 450, minibus: 550, business: 600 },
+        "narva-riga": { standard: 450, minibus: 550, business: 600 },
         "riga-luhamaa": { standard: 280, minibus: 300, business: 330 },
+        "luhamaa-riga": { standard: 280, minibus: 300, business: 330 },
         "riga-koidula": { standard: 300, minibus: 320, business: 350 },
+        "koidula-riga": { standard: 300, minibus: 320, business: 350 },
       };
 
       const fromLower = origin.toLowerCase();
