@@ -44,24 +44,24 @@ function calculateRoute(event) {
       const durationText = element.duration.text;
 
       const fixedRoutes = {
-        "tallinn-narva": { standard: 180, minibus: 230, business: 250 },
-        "narva-tallinn": { standard: 180, minibus: 230, business: 250 },
-        "tallinn-koidula": { standard: 280, minibus: 320, business: 330 },
-        "koidula-tallinn": { standard: 280, minibus: 320, business: 330 },
-        "tallinn-parnu": { standard: 110, minibus: 150, business: 150 },
-        "parnu-tallinn": { standard: 110, minibus: 150, business: 150 },
-        "tallinn-tartu": { standard: 160, minibus: 200, business: 210 },
-        "tartu-tallinn": { standard: 160, minibus: 200, business: 210 },
-        "tallinn-riga": { standard: 280, minibus: 320, business: 320 },
-        "riga-tallinn": { standard: 280, minibus: 320, business: 320 },
-        "tallinn-vilnius": { standard: 580, minibus: 600, business: 650 },
-        "vilnius-tallinn": { standard: 580, minibus: 600, business: 650 },
-        "riga-narva": { standard: 450, minibus: 550, business: 600 },
-        "narva-riga": { standard: 450, minibus: 550, business: 600 },
-        "riga-luhamaa": { standard: 280, minibus: 300, business: 330 },
-        "luhamaa-riga": { standard: 280, minibus: 300, business: 330 },
-        "riga-koidula": { standard: 300, minibus: 320, business: 350 },
-        "koidula-riga": { standard: 300, minibus: 320, business: 350 },
+        "tallinn-narva": { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
+        "narva-tallinn": { standard: 180, minibus: 230, business: 250, minibusbusiness:350 },
+        "tallinn-koidula": { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
+        "koidula-tallinn": { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
+        "tallinn-parnu": { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
+        "parnu-tallinn": { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
+        "tallinn-tartu": { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
+        "tartu-tallinn": { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
+        "tallinn-riga": { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
+        "riga-tallinn": { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
+        "tallinn-vilnius": { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
+        "vilnius-tallinn": { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
+        "riga-narva": { standard: 450, minibus: 550, minibusbusiness:600 },
+        "narva-riga": { standard: 450, minibus: 550, minibusbusiness: 600 },
+        "riga-luhamaa": { standard: 280, minibus: 300, minibusbusiness: 330 },
+        "luhamaa-riga": { standard: 280, minibus: 300, minibusbusiness: 330 },
+        "riga-koidula": { standard: 300, minibus: 320, minibusbusiness: 350 },
+        "koidula-riga": { standard: 300, minibus: 320, minibusbusiness: 350 },
       };
 
       const fromLower = origin.toLowerCase();
@@ -81,7 +81,7 @@ function calculateRoute(event) {
       if (routeKey && fixedRoutes[routeKey][carType] !== undefined) {
         price = fixedRoutes[routeKey][carType];
       } else {
-        const cityPrices = { standard: 20, xl: 30, business: 35 };
+        const cityPrices = { standard: 20, minibus: 30, business: 35, minibusbusiness: 50 };
         const basePrice = cityPrices[carType] || 20;
 
         if (distanceKm <= 10) {
