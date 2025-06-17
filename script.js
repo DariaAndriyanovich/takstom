@@ -31,15 +31,18 @@ function initAutocomplete() {
 function calculateRoute(event) {
   event.preventDefault();
 
-  const origin = document.getElementById("from").value;
-  const destination = document.getElementById("to").value;
+  const originRaw = document.getElementById("from").value;
+  const destinationRaw = document.getElementById("to").value;
+
+  const origin = originRaw.split(",")[0].toLowerCase().trim();
+  const destination = destinationRaw.split(",")[0].toLowerCase().trim();
   const carType = document.getElementById("car-type").value.toLowerCase();
 
   const service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix(
     {
-      origins: [origin],
-      destinations: [destination],
+      origins: [originRaw],
+      destinations: [destinationRaw],
       travelMode: google.maps.TravelMode.DRIVING,
       unitSystem: google.maps.UnitSystem.METRIC,
     },
@@ -82,13 +85,10 @@ function calculateRoute(event) {
         "koidula-riga": { standard: 300, minibus: 320, minibusbusiness: 350 },
       };
 
-      const fromLower = origin.toLowerCase();
-      const toLower = destination.toLowerCase();
-
       let routeKey = null;
       for (const key in fixedRoutes) {
         const [fromCity, toCity] = key.split("-");
-        if (fromLower.includes(fromCity) && toLower.includes(toCity)) {
+        if (origin.includes(fromCity) && destination.includes(toCity)) {
           routeKey = key;
           break;
         }
