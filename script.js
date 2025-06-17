@@ -1,13 +1,31 @@
 function initAutocomplete() {
-  const fromInput = document.getElementById("from");
-  const toInput = document.getElementById("to");
+  const bookingFromInput = document.getElementById("booking-from");
+  const bookingToInput = document.getElementById("booking-to");
 
-  new google.maps.places.Autocomplete(fromInput, {
-    componentRestrictions: { country: "ee" },
-  });
-  new google.maps.places.Autocomplete(toInput, {
-    componentRestrictions: { country: "ee" },
-  });
+  if (bookingFromInput) {
+    new google.maps.places.Autocomplete(bookingFromInput, {
+      componentRestrictions: { country: "ee" }
+    });
+  }
+  if (bookingToInput) {
+    new google.maps.places.Autocomplete(bookingToInput, {
+      componentRestrictions: { country: "ee" }
+    });
+  }
+
+  const priceFromInput = document.getElementById("from");
+  const priceToInput = document.getElementById("to");
+
+  if (priceFromInput) {
+    new google.maps.places.Autocomplete(priceFromInput, {
+      componentRestrictions: { country: "ee" }
+    });
+  }
+  if (priceToInput) {
+    new google.maps.places.Autocomplete(priceToInput, {
+      componentRestrictions: { country: "ee" }
+    });
+  }
 }
 
 function calculateRoute(event) {
@@ -212,4 +230,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
