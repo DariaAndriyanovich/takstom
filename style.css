@@ -230,6 +230,48 @@ transition: 0.3s;
   text-decoration: none;
 }
 
+.review-form {
+  padding: 60px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.review-form h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.review-form form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.review-form input,
+.review-form textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.review-form button {
+  background-color: #45a548;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.review-form button:hover {
+  background-color: #45a548;
+}
+
 footer {
   background: #eee;
   padding: 1rem 2rem;

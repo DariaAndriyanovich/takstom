@@ -225,6 +225,18 @@
     </div>
   </section>
 
+   <section class="review-form">
+      <div class="container">
+        <h2>Leave a Review</h2>
+        <form id="reviewForm" action="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" method="POST">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <textarea name="review" placeholder="Your Review" required></textarea>
+          <button type="submit">Submit</button>
+        </form>
+        <p id="review-message"></p>
+      </div>
+    </section>
+
   <section class="bottom">
     <div class="booking" id="booking">
       <h3 data-i18n="bookFormTitle">
@@ -287,15 +299,15 @@
           📧 takstom.info@gmail.com
         </a>
       </p>
-       <div class="messengers">
-    <a href="viber://chat?number=+37255935910" target="_blank">
-      <img src="img/Viber_logo_2018_(without_text).svg.png" alt="Viber" width="32" height="32">
-    </a>
-    <a href="https://wa.me/37255935910" target="_blank">
-      <img src="img/WhatsApp.svg.png" alt="WhatsApp" width="32" height="32">
-    </a>
-  </div>
-</div>
+      <div class="messengers">
+        <a href="viber://chat?number=+37255935910" target="_blank">
+          <img src="img/Viber_logo_2018_(without_text).svg.png" alt="Viber" width="32" height="32">
+        </a>
+        <a href="https://wa.me/37255935910" target="_blank">
+          <img src="img/WhatsApp.svg.png" alt="WhatsApp" width="32" height="32">
+        </a>
+      </div>
+    </div>
   </section>
 
   <footer>
@@ -310,5 +322,7 @@
 
 </body>
 <script src="script.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhSADBcM4V4xbbbjJBiP_r5r0hjkwXic&libraries=places&callback=initAutocomplete"></script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhSADBcM4V4xbbbjJBiP_r5r0hjkwXic&libraries=places&callback=initAutocomplete"></script>
+
 </html>
