@@ -1,50 +1,42 @@
-// === Google Places: автодополнение для обоих форм (calculator + booking) ===
-async function initAutocomplete() {
-  try {
-    // гарантированно подгружаем библиотеку places
-    await google.maps.importLibrary("places");
+function initAutocomplete() {
+  const bookingFromInput = document.getElementById("booking-from");
+  const bookingToInput = document.getElementById("booking-to");
 
-    const ids = ["from", "to", "booking-from", "booking-to"];
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      // новый API: PlaceAutocompleteElement (у него нет поля "fields")
-      new google.maps.places.PlaceAutocompleteElement({
-        inputElement: el,
-        componentRestrictions: { country: "ee" },
-      });
+  if (bookingFromInput) {
+    new google.maps.places.Autocomplete(bookingFromInput, {
+      componentRestrictions: { country: "ee" }
     });
-  } catch (e) {
-    console.error("Places API init failed:", e);
+  }
+  if (bookingToInput) {
+    new google.maps.places.Autocomplete(bookingToInput, {
+      componentRestrictions: { country: "ee" }
+    });
+  }
+
+  const priceFromInput = document.getElementById("from");
+  const priceToInput = document.getElementById("to");
+
+  if (priceFromInput) {
+    new google.maps.places.Autocomplete(priceFromInput, {
+      componentRestrictions: { country: "ee" }
+    });
+  }
+  if (priceToInput) {
+    new google.maps.places.Autocomplete(priceToInput, {
+      componentRestrictions: { country: "ee" }
+    });
   }
 }
-// колбэк должен быть глобальным для &callback=initAutocomplete
-window.initAutocomplete = initAutocomplete;
 
-// === Расчёт маршрута и цены для калькулятора (#transfer-form) ===
 function calculateRoute(event) {
   event.preventDefault();
 
-  const originRaw = document.getElementById("from")?.value?.trim() || "";
-  const destinationRaw = document.getElementById("to")?.value?.trim() || "";
-  const carType = (document.getElementById("car-type")?.value || "standard").toLowerCase();
+  const originRaw = document.getElementById("from").value;
+  const destinationRaw = document.getElementById("to").value;
 
-  const out = document.getElementById("price-output");
-  const show = (html) => { if (out) out.innerHTML = html; };
-
-  if (!originRaw || !destinationRaw) {
-    show("<p style='color:red;'>⚠️ Укажите оба адреса</p>");
-    return;
-  }
-
-  // ВАЖНО: именно этих переменных не хватало в одной из версий
   const origin = originRaw.split(",")[0].toLowerCase().trim();
   const destination = destinationRaw.split(",")[0].toLowerCase().trim();
-
-  if (!window.google || !google.maps || !google.maps.DistanceMatrixService) {
-    show("<p style='color:red;'>Google Maps API недоступен. Проверьте ключ и включённые API.</p>");
-    return;
-  }
+  const carType = document.getElementById("car-type").value.toLowerCase();
 
   const service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix(
@@ -56,13 +48,15 @@ function calculateRoute(event) {
     },
     (response, status) => {
       if (status !== "OK") {
-        show(`<p style='color:red;'>Error: ${status}</p>`);
+        document.getElementById("price-output").innerHTML =
+          `<p style='color:red;'>Error: ${status}</p>`;
         return;
       }
 
-      const element = response?.rows?.[0]?.elements?.[0];
-      if (!element || element.status !== "OK") {
-        show("<p style='color:red;'>Маршрут не найден.</p>");
+      const element = response.rows[0].elements[0];
+      if (element.status !== "OK") {
+        document.getElementById("price-output").innerHTML =
+          "<p style='color:red;'>Маршрут не найден.</p>";
         return;
       }
 
@@ -71,24 +65,24 @@ function calculateRoute(event) {
       const durationText = element.duration.text;
 
       const fixedRoutes = {
-        "tallinn-narva":   { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
-        "narva-tallinn":   { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
+        "tallinn-narva": { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
+        "narva-tallinn": { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
         "tallinn-koidula": { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
         "koidula-tallinn": { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
-        "tallinn-parnu":   { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
-        "parnu-tallinn":   { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
-        "tallinn-tartu":   { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
-        "tartu-tallinn":   { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
-        "tallinn-riga":    { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
-        "riga-tallinn":    { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
+        "tallinn-parnu": { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
+        "parnu-tallinn": { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
+        "tallinn-tartu": { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
+        "tartu-tallinn": { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
+        "tallinn-riga": { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
+        "riga-tallinn": { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
         "tallinn-vilnius": { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
         "vilnius-tallinn": { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
-        "riga-narva":      { standard: 450, minibus: 550,                    minibusbusiness: 600 },
-        "narva-riga":      { standard: 450, minibus: 550,                    minibusbusiness: 600 },
-        "riga-luhamaa":    { standard: 280, minibus: 300,                    minibusbusiness: 330 },
-        "luhamaa-riga":    { standard: 280, minibus: 300,                    minibusbusiness: 330 },
-        "riga-koidula":    { standard: 300, minibus: 320,                    minibusbusiness: 350 },
-        "koidula-riga":    { standard: 300, minibus: 320,                    minibusbusiness: 350 },
+        "riga-narva": { standard: 450, minibus: 550, minibusbusiness: 600 },
+        "narva-riga": { standard: 450, minibus: 550, minibusbusiness: 600 },
+        "riga-luhamaa": { standard: 280, minibus: 300, minibusbusiness: 330 },
+        "luhamaa-riga": { standard: 280, minibus: 300, minibusbusiness: 330 },
+        "riga-koidula": { standard: 300, minibus: 320, minibusbusiness: 350 },
+        "koidula-riga": { standard: 300, minibus: 320, minibusbusiness: 350 },
       };
 
       let routeKey = null;
@@ -110,31 +104,17 @@ function calculateRoute(event) {
         price = Math.round(price);
       }
 
-      show(`
+      document.getElementById("price-output").innerHTML = `
         <p><strong>Distance:</strong> ${distanceText}</p>
         <p><strong>Duration:</strong> ${durationText}</p>
         <p><strong>Estimated Price:</strong> €${price.toFixed(2)}</p>
-      `);
+      `;
     }
   );
 }
 
-// === Навешиваем обработчик только на калькулятор (#transfer-form) ===
-document.addEventListener("DOMContentLoaded", () => {
-  const transferForm = document.getElementById("transfer-form");
-  if (transferForm) {
-    transferForm.addEventListener("submit", calculateRoute);
-  }
+document.getElementById("transfer-form").addEventListener("submit", calculateRoute);
 
-  // Язык по умолчанию
-  setLanguage("en");
-  const langSelect = document.getElementById("language-select");
-  if (langSelect) {
-    langSelect.addEventListener("change", (e) => setLanguage(e.target.value));
-  }
-});
-
-// === Переводы ===
 const translations = {
   en: {
     title: "TaksTom",
@@ -151,14 +131,17 @@ const translations = {
     standardDesc: "Up to 3 passengers and 3 pieces luggage",
     minibusDesc: "Up to 8 passengers and 8 pieces luggage",
     businessDesc: "Up to 3 passengers and 3 pieces luggage",
-    toursTitle: "Tallinn & Estonia Tours",
-    toursDesc: "Discover the best sights with our guided tours in Tallinn and beyond!",
+    toursTitle: "Tallinn and Estonia Tours",
+    toursDesc: "Discover the best of Tallinn and Estonia with our sightseeing tours.",
     learnMore: "Learn More",
     bookFormTitle: "Book a Transfer",
     contactTitle: "Contact Us",
     send: "Send Request",
+    toursTitle: "Tallinn & Estonia Tours",
+    toursDesc: "Discover the best sights with our guided tours in Tallinn and beyond!",
     backHome: "← Back to Home",
     comingTitle: "Coming Soon!",
+    comingText: "We're working on exciting guided tours across Tallinn and all over Estonia! Stay tuned!",
     minibusBusiness:"Minibus Business",
     minibusBusinessDesc:"Up to 5 passengers and 5 pieces luggage"
   },
@@ -178,11 +161,13 @@ const translations = {
     minibusDesc: "До 8 пассажиров и 8 места для багажа",
     businessDesc: "До 3 пассажиров и 3 места для багажа",
     toursTitle: "Туры по Таллинну и Эстонии",
-    toursDesc: "Откройте лучшие достопримечательности Таллинна и всей Эстонии вместе с нами!",
+    toursDesc: "Откройте для себя Таллинн и Эстонию с нашими экскурсионными турами.",
     learnMore: "Подробнее",
     bookFormTitle: "Заказать трансфер",
     contactTitle: "Контакты",
     send: "Отправить заявку",
+    toursTitle: "Туры по Таллинну и Эстонии",
+    toursDesc: "Откройте лучшие достопримечательности Таллинна и всей Эстонии вместе с нами!",
     backHome: "← Назад на главную",
     comingTitle: "Скоро!",
     minibusBusiness:"Минивэн Бизнес",
@@ -204,11 +189,13 @@ const translations = {
     minibusDesc: "Kuni 8 reisijat ja 8 pagasikohta",
     businessDesc: "Kuni 3 reisijat ja 3 pagasikohta",
     toursTitle: "Tallinna ja Eesti ekskursioonid",
-    toursDesc: "Avasta Tallinna ja kogu Eesti parimad paigad meiega!",
+    toursDesc: "Avasta Tallinna ja Eesti parimad paigad meiega!",
     learnMore: "Loe lähemalt",
     bookFormTitle: "Broneeri transfer",
     contactTitle: "Võta meiega ühendust",
     send: "Saada päring",
+    toursTitle: "Tallinna ja Eesti ekskursioonid",
+    toursDesc: "Avasta Tallinna ja kogu Eesti parimad paigad meiega!",
     backHome: "← Tagasi avalehele",
     comingTitle: "Varsti saadaval!",
     minibusBusiness:"Äriklassi minibuss",
@@ -218,10 +205,21 @@ const translations = {
 
 function setLanguage(lang) {
   const elements = document.querySelectorAll("[data-i18n]");
-  elements.forEach((el) => {
+  elements.forEach(el => {
     const key = el.getAttribute("data-i18n");
-    if (translations[lang] && translations[lang][key]) {
+    if (translations[lang][key]) {
       el.textContent = translations[lang][key];
     }
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  setLanguage("en");
+  const langSelect = document.getElementById("language-select");
+  if (langSelect) {
+    langSelect.addEventListener("change", (e) => {
+      const selectedLang = e.target.value;
+      setLanguage(selectedLang);
+    });
+  }
+});
