@@ -1,33 +1,43 @@
+// === Google Places: новый API для автодополнения адресов ===
 function initAutocomplete() {
   const bookingFromInput = document.getElementById("booking-from");
-  const bookingToInput = document.getElementById("booking-to");
+  const bookingToInput   = document.getElementById("booking-to");
+  const priceFromInput   = document.getElementById("from");
+  const priceToInput     = document.getElementById("to");
 
-  if (bookingFromInput) {
-    new google.maps.places.Autocomplete(bookingFromInput, {
-      componentRestrictions: { country: "ee" }
-    });
-  }
-  if (bookingToInput) {
-    new google.maps.places.Autocomplete(bookingToInput, {
-      componentRestrictions: { country: "ee" }
-    });
+  // Защита: google.maps может быть недоступен, если скрипт не загрузился
+  if (!window.google || !google.maps || !google.maps.places) {
+    console.warn("Google Maps Places API not available");
+    return;
   }
 
-  const priceFromInput = document.getElementById("from");
-  const priceToInput = document.getElementById("to");
+  function makeAutocomplete(el) {
+    if (!el) return null;
+    const auto = new google.maps.places.PlaceAutocompleteElement({
+      inputElement: el,
+      componentRestrictions: { country: ["ee"] },
+      fields: ["place_id", "formatted_address", "geometry", "name"],
+    });
 
-  if (priceFromInput) {
-    new google.maps.places.Autocomplete(priceFromInput, {
-      componentRestrictions: { country: "ee" }
+    // (опционально) реакция на выбор адреса
+    auto.addEventListener("place_changed", () => {
+      const p = auto.getPlace();
+      // пример: можно сохранить координаты, если нужно
+      // const lat = p.geometry?.location?.lat();
+      // const lng = p.geometry?.location?.lng();
+      // console.log("Selected:", p.formatted_address, lat, lng);
     });
+
+    return auto;
   }
-  if (priceToInput) {
-    new google.maps.places.Autocomplete(priceToInput, {
-      componentRestrictions: { country: "ee" }
-    });
-  }
+
+  makeAutocomplete(bookingFromInput);
+  makeAutocomplete(bookingToInput);
+  makeAutocomplete(priceFromInput);
+  makeAutocomplete(priceToInput);
 }
 
+// === Расчёт маршрута и цены ===
 function calculateRoute(event) {
   event.preventDefault();
 
@@ -37,6 +47,12 @@ function calculateRoute(event) {
   const origin = originRaw.split(",")[0].toLowerCase().trim();
   const destination = destinationRaw.split(",")[0].toLowerCase().trim();
   const carType = document.getElementById("car-type").value.toLowerCase();
+
+  if (!window.google || !google.maps || !google.maps.DistanceMatrixService) {
+    document.getElementById("price-output").innerHTML =
+      "<p style='color:red;'>Google Maps недоступен. Проверьте ключ/API.</p>";
+    return;
+  }
 
   const service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix(
@@ -54,7 +70,7 @@ function calculateRoute(event) {
       }
 
       const element = response.rows[0].elements[0];
-      if (element.status !== "OK") {
+      if (!element || element.status !== "OK") {
         document.getElementById("price-output").innerHTML =
           "<p style='color:red;'>Маршрут не найден.</p>";
         return;
@@ -65,24 +81,24 @@ function calculateRoute(event) {
       const durationText = element.duration.text;
 
       const fixedRoutes = {
-        "tallinn-narva": { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
-        "narva-tallinn": { standard: 180, minibus: 230, business: 250, minibusbusiness:350 },
-        "tallinn-koidula": { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
-        "koidula-tallinn": { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
-        "tallinn-parnu": { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
-        "parnu-tallinn": { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
-        "tallinn-tartu": { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
-        "tartu-tallinn": { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
-        "tallinn-riga": { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
-        "riga-tallinn": { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
-        "tallinn-vilnius": { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
-        "vilnius-tallinn": { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
-        "riga-narva": { standard: 450, minibus: 550, minibusbusiness:600 },
-        "narva-riga": { standard: 450, minibus: 550, minibusbusiness: 600 },
-        "riga-luhamaa": { standard: 280, minibus: 300, minibusbusiness: 330 },
-        "luhamaa-riga": { standard: 280, minibus: 300, minibusbusiness: 330 },
-        "riga-koidula": { standard: 300, minibus: 320, minibusbusiness: 350 },
-        "koidula-riga": { standard: 300, minibus: 320, minibusbusiness: 350 },
+        "tallinn-narva":     { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
+        "narva-tallinn":     { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
+        "tallinn-koidula":   { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
+        "koidula-tallinn":   { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
+        "tallinn-parnu":     { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
+        "parnu-tallinn":     { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
+        "tallinn-tartu":     { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
+        "tartu-tallinn":     { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
+        "tallinn-riga":      { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
+        "riga-tallinn":      { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
+        "tallinn-vilnius":   { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
+        "vilnius-tallinn":   { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
+        "riga-narva":        { standard: 450, minibus: 550,                  minibusbusiness: 600 },
+        "narva-riga":        { standard: 450, minibus: 550,                  minibusbusiness: 600 },
+        "riga-luhamaa":      { standard: 280, minibus: 300,                  minibusbusiness: 330 },
+        "luhamaa-riga":      { standard: 280, minibus: 300,                  minibusbusiness: 330 },
+        "riga-koidula":      { standard: 300, minibus: 320,                  minibusbusiness: 350 },
+        "koidula-riga":      { standard: 300, minibus: 320,                  minibusbusiness: 350 },
       };
 
       let routeKey = null;
@@ -119,8 +135,26 @@ function calculateRoute(event) {
   );
 }
 
-document.getElementById("transfer-form").addEventListener("submit", calculateRoute);
+// Подвешиваем обработчик формы (если форма есть на странице)
+document.addEventListener("DOMContentLoaded", () => {
+  const transferForm = document.getElementById("transfer-form");
+  if (transferForm) {
+    transferForm.addEventListener("submit", calculateRoute);
+  }
 
+  // Языки — инициализация по умолчанию
+  setLanguage("en");
+
+  const langSelect = document.getElementById("language-select");
+  if (langSelect) {
+    langSelect.addEventListener("change", (e) => {
+      const selectedLang = e.target.value;
+      setLanguage(selectedLang);
+    });
+  }
+});
+
+// === I18N ===
 const translations = {
   en: {
     title: "TaksTom",
@@ -137,19 +171,17 @@ const translations = {
     standardDesc: "Up to 3 passengers and 3 pieces luggage",
     minibusDesc: "Up to 8 passengers and 8 pieces luggage",
     businessDesc: "Up to 3 passengers and 3 pieces luggage",
-    toursTitle: "Tallinn and Estonia Tours",
-    toursDesc: "Discover the best of Tallinn and Estonia with our sightseeing tours.",
+    toursTitle: "Tallinn & Estonia Tours",
+    toursDesc: "Discover the best sights with our guided tours in Tallinn and beyond!",
     learnMore: "Learn More",
     bookFormTitle: "Book a Transfer",
     contactTitle: "Contact Us",
     send: "Send Request",
-    toursTitle: "Tallinn & Estonia Tours",
-    toursDesc: "Discover the best sights with our guided tours in Tallinn and beyond!",
     backHome: "← Back to Home",
     comingTitle: "Coming Soon!",
     comingText: "We're working on exciting guided tours across Tallinn and all over Estonia!Stay tuned — our tours will be available very soon. Get ready to explore hidden gems and iconic landmarks with us!",
-    minibusBusiness:"Minibus Business",
-    minibusBusinessDesc:"Up to 5 passengers and 5 pieces luggage"
+    minibusBusiness: "Minibus Business",
+    minibusBusinessDesc: "Up to 5 passengers and 5 pieces luggage",
   },
   ru: {
     title: "TaksTom",
@@ -167,17 +199,15 @@ const translations = {
     minibusDesc: "До 8 пассажиров и 8 места для багажа",
     businessDesc: "До 3 пассажиров и 3 места для багажа",
     toursTitle: "Туры по Таллинну и Эстонии",
-    toursDesc: "Откройте для себя Таллинн и Эстонию с нашими экскурсионными турами.",
+    toursDesc: "Откройте лучшие достопримечательности Таллинна и всей Эстонии вместе с нами!",
     learnMore: "Подробнее",
     bookFormTitle: "Заказать трансфер",
     contactTitle: "Контакты",
     send: "Отправить заявку",
-    toursTitle: "Туры по Таллинну и Эстонии",
-    toursDesc: "Откройте лучшие достопримечательности Таллинна и всей Эстонии вместе с нами!",
     backHome: "← Назад на главную",
     comingTitle: "Скоро!",
-    minibusBusiness:"Минивэн Бизнес",
-    minibusBusinessDesc:"До 5 пассажиров и 5 места для багажа"
+    minibusBusiness: "Минивэн Бизнес",
+    minibusBusinessDesc: "До 5 пассажиров и 5 места для багажа",
   },
   et: {
     title: "TaksTom",
@@ -195,38 +225,24 @@ const translations = {
     minibusDesc: "Kuni 8 reisijat ja 8 pagasikohta",
     businessDesc: "Kuni 3 reisijat ja 3 pagasikohta",
     toursTitle: "Tallinna ja Eesti ekskursioonid",
-    toursDesc: "Avasta Tallinna ja Eesti parimad paigad meiega.",
+    toursDesc: "Avasta Tallinna ja kogu Eesti parimad paigad meiega!",
     learnMore: "Loe lähemalt",
     bookFormTitle: "Broneeri transfer",
     contactTitle: "Võta meiega ühendust",
     send: "Saada päring",
-    toursTitle: "Tallinna ja Eesti ekskursioonid",
-    toursDesc: "Avasta Tallinna ja kogu Eesti parimad paigad meiega!",
     backHome: "← Tagasi avalehele",
     comingTitle: "Varsti saadaval!",
-    minibusBusiness:"Äriklassi minibuss",
-    minibusBusinessDesc:"Kuni 5 reisijat ja 5 pagasikohta"
-  }
+    minibusBusiness: "Äriklassi minibuss",
+    minibusBusinessDesc: "Kuni 5 reisijat ja 5 pagasikohta",
+  },
 };
 
 function setLanguage(lang) {
   const elements = document.querySelectorAll("[data-i18n]");
-  elements.forEach(el => {
+  elements.forEach((el) => {
     const key = el.getAttribute("data-i18n");
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.textContent = translations[lang][key];
     }
   });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  setLanguage("en");
-
-  const langSelect = document.getElementById("language-select");
-  if (langSelect) {
-    langSelect.addEventListener("change", (e) => {
-      const selectedLang = e.target.value;
-      setLanguage(selectedLang);
-    });
-  }
-});
