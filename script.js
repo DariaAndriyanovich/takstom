@@ -1,39 +1,48 @@
+// === Google Places: автодополнение для обоих форм (calculator + booking) ===
 async function initAutocomplete() {
   try {
+    // гарантированно подгружаем библиотеку places
     await google.maps.importLibrary("places");
 
     const ids = ["from", "to", "booking-from", "booking-to"];
-    ids.forEach(id => {
+    ids.forEach((id) => {
       const el = document.getElementById(id);
-      if (el) {
-        new google.maps.places.PlaceAutocompleteElement({
-          inputElement: el,
-          componentRestrictions: { country: "ee" }
-        });
-      }
+      if (!el) return;
+      // новый API: PlaceAutocompleteElement (у него нет поля "fields")
+      new google.maps.places.PlaceAutocompleteElement({
+        inputElement: el,
+        componentRestrictions: { country: "ee" },
+      });
     });
   } catch (e) {
     console.error("Places API init failed:", e);
   }
 }
+// колбэк должен быть глобальным для &callback=initAutocomplete
 window.initAutocomplete = initAutocomplete;
 
+// === Расчёт маршрута и цены для калькулятора (#transfer-form) ===
 function calculateRoute(event) {
   event.preventDefault();
 
-  const originRaw = document.getElementById("from").value;
-  const destinationRaw = document.getElementById("to").value;
-  const carType = document.getElementById("car-type").value.toLowerCase();
+  const originRaw = document.getElementById("from")?.value?.trim() || "";
+  const destinationRaw = document.getElementById("to")?.value?.trim() || "";
+  const carType = (document.getElementById("car-type")?.value || "standard").toLowerCase();
+
+  const out = document.getElementById("price-output");
+  const show = (html) => { if (out) out.innerHTML = html; };
 
   if (!originRaw || !destinationRaw) {
-    document.getElementById("price-output").innerHTML =
-      "<p style='color:red;'>⚠️ Укажите оба адреса</p>";
+    show("<p style='color:red;'>⚠️ Укажите оба адреса</p>");
     return;
   }
 
-  if (!window.google || !google.maps.DistanceMatrixService) {
-    document.getElementById("price-output").innerHTML =
-      "<p style='color:red;'>Google Maps API недоступен. Проверьте ключ и API.</p>";
+  // ВАЖНО: именно этих переменных не хватало в одной из версий
+  const origin = originRaw.split(",")[0].toLowerCase().trim();
+  const destination = destinationRaw.split(",")[0].toLowerCase().trim();
+
+  if (!window.google || !google.maps || !google.maps.DistanceMatrixService) {
+    show("<p style='color:red;'>Google Maps API недоступен. Проверьте ключ и включённые API.</p>");
     return;
   }
 
@@ -47,15 +56,13 @@ function calculateRoute(event) {
     },
     (response, status) => {
       if (status !== "OK") {
-        document.getElementById("price-output").innerHTML =
-          `<p style='color:red;'>Error: ${status}</p>`;
+        show(`<p style='color:red;'>Error: ${status}</p>`);
         return;
       }
 
-      const element = response.rows[0].elements[0];
+      const element = response?.rows?.[0]?.elements?.[0];
       if (!element || element.status !== "OK") {
-        document.getElementById("price-output").innerHTML =
-          "<p style='color:red;'>Маршрут не найден.</p>";
+        show("<p style='color:red;'>Маршрут не найден.</p>");
         return;
       }
 
@@ -64,30 +71,30 @@ function calculateRoute(event) {
       const durationText = element.duration.text;
 
       const fixedRoutes = {
-        "tallinn-narva": { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
-        "narva-tallinn": { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
+        "tallinn-narva":   { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
+        "narva-tallinn":   { standard: 180, minibus: 230, business: 250, minibusbusiness: 350 },
         "tallinn-koidula": { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
         "koidula-tallinn": { standard: 280, minibus: 320, business: 330, minibusbusiness: 400 },
-        "tallinn-parnu": { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
-        "parnu-tallinn": { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
-        "tallinn-tartu": { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
-        "tartu-tallinn": { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
-        "tallinn-riga": { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
-        "riga-tallinn": { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
+        "tallinn-parnu":   { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
+        "parnu-tallinn":   { standard: 110, minibus: 150, business: 150, minibusbusiness: 250 },
+        "tallinn-tartu":   { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
+        "tartu-tallinn":   { standard: 160, minibus: 200, business: 210, minibusbusiness: 300 },
+        "tallinn-riga":    { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
+        "riga-tallinn":    { standard: 280, minibus: 320, business: 320, minibusbusiness: 380 },
         "tallinn-vilnius": { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
         "vilnius-tallinn": { standard: 580, minibus: 600, business: 650, minibusbusiness: 800 },
-        "riga-narva": { standard: 450, minibus: 550, minibusbusiness: 600 },
-        "narva-riga": { standard: 450, minibus: 550, minibusbusiness: 600 },
-        "riga-luhamaa": { standard: 280, minibus: 300, minibusbusiness: 330 },
-        "luhamaa-riga": { standard: 280, minibus: 300, minibusbusiness: 330 },
-        "riga-koidula": { standard: 300, minibus: 320, minibusbusiness: 350 },
-        "koidula-riga": { standard: 300, minibus: 320, minibusbusiness: 350 },
+        "riga-narva":      { standard: 450, minibus: 550,                    minibusbusiness: 600 },
+        "narva-riga":      { standard: 450, minibus: 550,                    minibusbusiness: 600 },
+        "riga-luhamaa":    { standard: 280, minibus: 300,                    minibusbusiness: 330 },
+        "luhamaa-riga":    { standard: 280, minibus: 300,                    minibusbusiness: 330 },
+        "riga-koidula":    { standard: 300, minibus: 320,                    minibusbusiness: 350 },
+        "koidula-riga":    { standard: 300, minibus: 320,                    minibusbusiness: 350 },
       };
 
       let routeKey = null;
       for (const key in fixedRoutes) {
         const [fromCity, toCity] = key.split("-");
-        if (origin.toLowerCase().includes(fromCity) && destination.toLowerCase().includes(toCity)) {
+        if (origin.includes(fromCity) && destination.includes(toCity)) {
           routeKey = key;
           break;
         }
@@ -103,31 +110,31 @@ function calculateRoute(event) {
         price = Math.round(price);
       }
 
-      document.getElementById("price-output").innerHTML = `
+      show(`
         <p><strong>Distance:</strong> ${distanceText}</p>
         <p><strong>Duration:</strong> ${durationText}</p>
         <p><strong>Estimated Price:</strong> €${price.toFixed(2)}</p>
-      `;
+      `);
     }
   );
 }
 
+// === Навешиваем обработчик только на калькулятор (#transfer-form) ===
 document.addEventListener("DOMContentLoaded", () => {
   const transferForm = document.getElementById("transfer-form");
   if (transferForm) {
     transferForm.addEventListener("submit", calculateRoute);
   }
 
+  // Язык по умолчанию
   setLanguage("en");
-
   const langSelect = document.getElementById("language-select");
   if (langSelect) {
-    langSelect.addEventListener("change", (e) => {
-      setLanguage(e.target.value);
-    });
+    langSelect.addEventListener("change", (e) => setLanguage(e.target.value));
   }
 });
 
+// === Переводы ===
 const translations = {
   en: {
     title: "TaksTom",
@@ -211,9 +218,9 @@ const translations = {
 
 function setLanguage(lang) {
   const elements = document.querySelectorAll("[data-i18n]");
-  elements.forEach(el => {
+  elements.forEach((el) => {
     const key = el.getAttribute("data-i18n");
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.textContent = translations[lang][key];
     }
   });
