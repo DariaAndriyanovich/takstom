@@ -1,10 +1,8 @@
-// === Инициализация автодополнения адресов ===
 async function initAutocomplete() {
   try {
     await google.maps.importLibrary("places");
 
-    const ids = ["booking-from", "booking-to", "from", "to"];
-
+    const ids = ["from", "to", "booking-from", "booking-to"];
     ids.forEach(id => {
       const el = document.getElementById(id);
       if (el) {
@@ -18,22 +16,24 @@ async function initAutocomplete() {
     console.error("Places API init failed:", e);
   }
 }
-window.initAutocomplete = initAutocomplete; // делаем глобальной
+window.initAutocomplete = initAutocomplete;
 
-// === Расчёт маршрута и цены ===
 function calculateRoute(event) {
   event.preventDefault();
 
   const originRaw = document.getElementById("from").value;
   const destinationRaw = document.getElementById("to").value;
-
-  const origin = originRaw.split(",")[0].toLowerCase().trim();
-  const destination = destinationRaw.split(",")[0].toLowerCase().trim();
   const carType = document.getElementById("car-type").value.toLowerCase();
+
+  if (!originRaw || !destinationRaw) {
+    document.getElementById("price-output").innerHTML =
+      "<p style='color:red;'>⚠️ Укажите оба адреса</p>";
+    return;
+  }
 
   if (!window.google || !google.maps.DistanceMatrixService) {
     document.getElementById("price-output").innerHTML =
-      "<p style='color:red;'>Google Maps API недоступен. Проверьте ключ и включённые API.</p>";
+      "<p style='color:red;'>Google Maps API недоступен. Проверьте ключ и API.</p>";
     return;
   }
 
@@ -53,7 +53,7 @@ function calculateRoute(event) {
       }
 
       const element = response.rows[0].elements[0];
-      if (element.status !== "OK") {
+      if (!element || element.status !== "OK") {
         document.getElementById("price-output").innerHTML =
           "<p style='color:red;'>Маршрут не найден.</p>";
         return;
@@ -87,25 +87,19 @@ function calculateRoute(event) {
       let routeKey = null;
       for (const key in fixedRoutes) {
         const [fromCity, toCity] = key.split("-");
-        if (origin.includes(fromCity) && destination.includes(toCity)) {
+        if (origin.toLowerCase().includes(fromCity) && destination.toLowerCase().includes(toCity)) {
           routeKey = key;
           break;
         }
       }
 
       let price = 0;
-
       if (routeKey && fixedRoutes[routeKey][carType] !== undefined) {
         price = fixedRoutes[routeKey][carType];
       } else {
         const cityPrices = { standard: 20, minibus: 30, business: 35, minibusbusiness: 50 };
         const basePrice = cityPrices[carType] || 20;
-
-        if (distanceKm <= 10) {
-          price = basePrice;
-        } else {
-          price = basePrice + (distanceKm - 10) * 1;
-        }
+        price = distanceKm <= 10 ? basePrice : basePrice + (distanceKm - 10) * 1;
         price = Math.round(price);
       }
 
@@ -118,14 +112,12 @@ function calculateRoute(event) {
   );
 }
 
-// === Обработка формы ===
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("transfer-form");
-  if (form) {
-    form.addEventListener("submit", calculateRoute);
+  const transferForm = document.getElementById("transfer-form");
+  if (transferForm) {
+    transferForm.addEventListener("submit", calculateRoute);
   }
 
-  // Язык по умолчанию
   setLanguage("en");
 
   const langSelect = document.getElementById("language-select");
@@ -136,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// === Переводы ===
 const translations = {
   en: {
     title: "TaksTom",
