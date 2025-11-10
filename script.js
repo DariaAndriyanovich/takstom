@@ -234,6 +234,11 @@ function setLanguage(lang) {
   });
 }
 
+const canonical = document.querySelector('link[rel="canonical"]');
+if (canonical) {
+  canonical.setAttribute('href', `https://takstom.com/?lang=${lang}`);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setLanguage("en");
   const langSelect = document.getElementById("language-select");
