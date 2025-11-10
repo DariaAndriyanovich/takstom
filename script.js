@@ -143,7 +143,14 @@ const translations = {
     comingTitle: "Coming Soon!",
     comingText: "We're working on exciting guided tours across Tallinn and all over Estonia! Stay tuned!",
     minibusBusiness:"Minibus Business",
-    minibusBusinessDesc:"Up to 5 passengers and 5 pieces luggage"
+    minibusBusinessDesc:"Up to 5 passengers and 5 pieces luggage",
+    benefitsTitle: "Why Choose Us",
+    benefit1: "On-time pickup — we track flights and arrivals",
+    benefit2: "Clean and comfortable cars: Standard, XL & Business",
+    benefit3: "We help with luggage loading and unloading",
+    benefit4: "Child seat available on request — free of charge",
+    benefit5: "Bottled water provided for every passenger",
+    benefit6: "Up to 60 minutes airport waiting time included"
   },
   ru: {
     title: "TaksTom",
@@ -171,7 +178,14 @@ const translations = {
     backHome: "← Назад на главную",
     comingTitle: "Скоро!",
     minibusBusiness:"Минивэн Бизнес",
-    minibusBusinessDesc:"До 5 пассажиров и 5 места для багажа"
+    minibusBusinessDesc:"До 5 пассажиров и 5 места для багажа",
+    benefitsTitle: "Почему выбирают нас",
+    benefit1: "Подача вовремя — отслеживаем рейсы",
+    benefit2: "Комфортные и чистые автомобили",
+    benefit3: "Помогаем перенести и загрузить багаж",
+    benefit4: "Детское кресло — бесплатно по запросу",
+    benefit5: "Бутылочка воды каждому пассажиру",
+    benefit6: "До 60 минут ожидания в аэропорту — бесплатно"
   },
   et: {
     title: "TaksTom",
@@ -199,7 +213,14 @@ const translations = {
     backHome: "← Tagasi avalehele",
     comingTitle: "Varsti saadaval!",
     minibusBusiness:"Äriklassi minibuss",
-    minibusBusinessDesc:"Kuni 5 reisijat ja 5 pagasikohta"
+    minibusBusinessDesc:"Kuni 5 reisijat ja 5 pagasikohta",
+    benefitsTitle: "Miks valida meid",
+    benefit1: "Õigeaegne saabumine — jälgime lende",
+    benefit2: "Puhtad ja mugavad autod",
+    benefit3: "Aitame pagasiga",
+    benefit4: "Lapse turvatool — soovi korral tasuta",
+    benefit5: "Iga reisija saab pudelivett",
+    benefit6: "Kuni 60 minutit lennujaamas ootamist — tasuta"
   }
 };
 
