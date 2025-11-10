@@ -150,7 +150,9 @@ const translations = {
     benefit3: "We help with luggage loading and unloading",
     benefit4: "Child seat available on request — free of charge",
     benefit5: "Bottled water provided for every passenger",
-    benefit6: "Up to 60 minutes airport waiting time included"
+    benefit6: "Up to 60 minutes airport waiting time included",
+    pageTitle: "Airport Transfer & Taxi in Tallinn | TaksTom",
+    pageDesc: "Private taxi and airport transfers in Tallinn and across Estonia. Clean cars, friendly drivers, fixed pricing. Book online."
   },
   ru: {
     title: "TaksTom",
@@ -185,7 +187,9 @@ const translations = {
     benefit3: "Помогаем перенести и загрузить багаж",
     benefit4: "Детское кресло — бесплатно по запросу",
     benefit5: "Бутылочка воды каждому пассажиру",
-    benefit6: "До 60 минут ожидания в аэропорту — бесплатно"
+    benefit6: "До 60 минут ожидания в аэропорту — бесплатно",
+    pageTitle: "Такси и трансфер в Таллине и по всей Эстонии | TaksTom",
+    pageDesc: "Комфортные трансферы по Таллину и всей Эстонии. Чистые авто, вежливые водители, фиксированные цены. Быстрое онлайн-бронирование."
   },
   et: {
     title: "TaksTom",
@@ -220,7 +224,9 @@ const translations = {
     benefit3: "Aitame pagasiga",
     benefit4: "Lapse turvatool — soovi korral tasuta",
     benefit5: "Iga reisija saab pudelivett",
-    benefit6: "Kuni 60 minutit lennujaamas ootamist — tasuta"
+    benefit6: "Kuni 60 minutit lennujaamas ootamist — tasuta",
+    pageTitle: "Lennujaama transfeer ja takso Tallinnas | TaksTom",
+    pageDesc: "Transfeerid Tallinnas ja üle Eesti. Puhas auto, sõbralik juht, aus fikseeritud hind. Broneeri mugavalt."
   }
 };
 
