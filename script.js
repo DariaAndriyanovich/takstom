@@ -243,6 +243,13 @@ function setLanguage(lang) {
   if (canonical) {
     canonical.setAttribute('href', `https://takstom.com/?lang=${lang}`);
   }
+
+  document.title = translations[lang].pageTitle;
+
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) {
+    metaDesc.setAttribute("content", translations[lang].pageDesc);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
