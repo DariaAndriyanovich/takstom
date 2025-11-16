@@ -113,7 +113,10 @@ function calculateRoute(event) {
   );
 }
 
-document.getElementById("transfer-form").addEventListener("submit", calculateRoute);
+const transferForm = document.getElementById("transfer-form");
+if (transferForm) {
+    transferForm.addEventListener("submit", calculateRoute);
+}
 
 const translations = {
   en: {
@@ -262,3 +265,59 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+const tourDescriptions = {
+  jagala: {
+    title: "Jägala Waterfall",
+    img: "img/tours/jagala.jpg",
+    text: "Jägala Waterfall is one of Estonia’s most impressive natural sights. Only 30 minutes from Tallinn — perfect for short trips."
+  },
+  palmse: {
+    title: "Palmse Manor",
+    img: "img/tours/palmse.jpg",
+    text: "Palmse Manor is a grand baroque estate with gardens, historical buildings and a beautiful park."
+  },
+  sagadi: {
+    title: "Sagadi Manor",
+    img: "img/tours/sagadi.jpg",
+    text: "Sagadi Manor, known as the 'Forest Manor', includes a museum, trails, ponds and forest nature."
+  },
+  vihula: {
+    title: "Vihula Manor",
+    img: "img/tours/vihula.jpg",
+    text: "A peaceful countryside complex with watermills, bridges and traditional architecture."
+  },
+  altja: {
+    title: "Altja Fisherman Village",
+    img: "img/tours/altja.jpg",
+    text: "A traditional seaside village inside Lahemaa National Park with coastal trails and wooden houses."
+  },
+  bog: {
+    title: "Bog Hiking",
+    img: "img/tours/bog.jpg",
+    text: "Explore Estonia’s mystical bogs, wooden paths and scenic lakes."
+  }
+};
+
+document.querySelectorAll(".tour-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const tour = card.dataset.tour;
+    const data = tourDescriptions[tour];
+
+    document.getElementById("modal-title").textContent = data.title;
+    document.getElementById("modal-img").src = data.img;
+    document.getElementById("modal-text").textContent = data.text;
+
+    document.getElementById("tour-modal").style.display = "flex";
+  });
+});
+
+document.querySelector(".modal-close").onclick = () => {
+  document.getElementById("tour-modal").style.display = "none";
+};
+
+window.onclick = (e) => {
+  if (e.target.id === "tour-modal") {
+    document.getElementById("tour-modal").style.display = "none";
+  }
+};

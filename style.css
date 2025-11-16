@@ -419,3 +419,28 @@ footer {
   color: #333;
   line-height: 1.4;
 }
+
+.intro {
+  padding: 4rem 2rem;
+  background: #fff;
+  text-align: center;
+}
+
+.intro .container {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.intro h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+
+.intro p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin-bottom: 1.2rem;
+  color: #444;
+}

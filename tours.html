@@ -65,6 +65,92 @@
       margin-bottom: 50px;
     }
 
+    .tours-section {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .tour-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .tour-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform .3s;
+    }
+
+    .tour-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .tour-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .tour-card h3 {
+      padding: 15px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      text-align: left;
+      animation: popup .3s ease;
+    }
+
+    @keyframes popup {
+      from {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-content img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .modal-close {
+      float: right;
+      cursor: pointer;
+      font-size: 1.8rem;
+    }
+
     @media (max-width: 768px) {
       .tour-hero h1 {
         font-size: 1.5rem;
@@ -110,7 +196,7 @@
 
 <body>
 
-    <select id="language-select">
+  <select id="language-select">
     <option value="en">
       English
     </option>
@@ -136,18 +222,53 @@
     </div>
   </div>
 
-  <section class="tour-coming">
-    <div class="container">
-      <h2 data-i18n="comingTitle">
-        Coming Soon!
-      </h2>
-      <p data-i18n="comingText">
-        We're working on exciting guided tours across Tallinn and all over Estonia! 🏯👫🌳<br><br>
-        Stay tuned &mdash; our tours will be available very soon. Get ready to explore hidden gems and iconic landmarks
-        with us!
-      </p>
+  <section class="tours-section">
+    <h2>Tallinn & Estonia Tours</h2>
+
+    <div class="tour-cards">
+
+      <div class="tour-card" data-tour="jagala">
+        <img src="img/tours/jagala.jpg" alt="Jägala Waterfall">
+        <h3>Jägala Waterfall</h3>
+      </div>
+
+      <div class="tour-card" data-tour="palmse">
+        <img src="img/tours/palmse.jpg" alt="Palmse mõis">
+        <h3>Palmse Manor</h3>
+      </div>
+
+      <div class="tour-card" data-tour="sagadi">
+        <img src="img/tours/sagadi.jpg" alt="Sagadi mõis">
+        <h3>Sagadi Manor</h3>
+      </div>
+
+      <div class="tour-card" data-tour="vihula">
+        <img src="img/tours/vihula.jpg" alt="Vihula mõis">
+        <h3>Vihula Manor</h3>
+      </div>
+
+      <div class="tour-card" data-tour="altja">
+        <img src="img/tours/altja.jpg" alt="Altja Village">
+        <h3>Altja Fisherman Village</h3>
+      </div>
+
+      <div class="tour-card" data-tour="bog">
+        <img src="img/tours/bog.jpg" alt="Bog Trails">
+        <h3>Bog Hiking</h3>
+      </div>
+
     </div>
   </section>
+
+  <!-- Modal Window -->
+  <div id="tour-modal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2 id="modal-title"></h2>
+      <img id="modal-img" src="" alt="">
+      <p id="modal-text"></p>
+    </div>
+  </div>
 
   <footer>
     <p>
@@ -158,6 +279,7 @@
     </p>
     </p>
   </footer>
+  <script src="script.js"></script>
 </body>
 
 </html>
