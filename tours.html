@@ -151,6 +151,29 @@
       font-size: 1.8rem;
     }
 
+    .modal-book-btn {
+      display: block;
+      margin: 1.5rem auto 0 auto;
+      /* ← центрирование */
+      background: #28a745;
+      color: white;
+      padding: 12px 20px;
+      text-align: center;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1rem;
+      width: 70%;
+      /* кнопка шириной — красиво */
+      max-width: 300px;
+      /* но не больше 300px */
+      transition: background .2s ease;
+    }
+
+    .modal-book-btn:hover {
+      background: #1f8a38;
+    }
+
     @media (max-width: 768px) {
       .tour-hero h1 {
         font-size: 1.5rem;
@@ -260,14 +283,17 @@
     </div>
   </section>
 
-  <!-- Modal Window -->
-  <div id="tour-modal" class="modal">
-    <div class="modal-content">
-      <span class="modal-close">&times;</span>
-      <h2 id="modal-title"></h2>
-      <img id="modal-img" src="" alt="">
-      <p id="modal-text"></p>
-    </div>
+  <div class="modal-content">
+
+    <h2 id="modal-title"></h2>
+
+    <img id="modal-img" src="" alt="">
+
+    <p id="modal-text"></p>
+
+    <a id="modal-book-btn" class="modal-book-btn" href="#" target="_blank">
+      Book a Tour
+    </a>
   </div>
 
   <footer>

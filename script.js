@@ -103,7 +103,8 @@ function calculateRoute(event) {
         price = distanceKm <= 10 ? basePrice : basePrice + (distanceKm - 10) * 1;
         price = Math.round(price);
       }
-
+      document.getElementById("finalPrice").value = price;
+      
       document.getElementById("price-output").innerHTML = `
         <p><strong>Distance:</strong> ${distanceText}</p>
         <p><strong>Duration:</strong> ${durationText}</p>
