@@ -104,7 +104,7 @@ function calculateRoute(event) {
         price = Math.round(price);
       }
       document.getElementById("finalPrice").value = price;
-      
+
       document.getElementById("price-output").innerHTML = `
         <p><strong>Distance:</strong> ${distanceText}</p>
         <p><strong>Duration:</strong> ${durationText}</p>
@@ -258,12 +258,53 @@ function setLanguage(lang) {
 
 document.addEventListener("DOMContentLoaded", () => {
   setLanguage("en");
+
   const langSelect = document.getElementById("language-select");
+
   if (langSelect) {
     langSelect.addEventListener("change", (e) => {
       const selectedLang = e.target.value;
+
       setLanguage(selectedLang);
+
+      const langInput = document.querySelector(
+        '#booking-form input[name="lang"]'
+      );
+
+      if (langInput) {
+        langInput.value = selectedLang;
+      }
     });
+  }
+
+  const startedAtInput =
+    document.getElementById("form-started-at");
+
+  if (startedAtInput) {
+    startedAtInput.value = Date.now();
+  }
+
+
+  const bookingDateInput =
+    document.querySelector(
+      '#booking-form input[name="date"]'
+    );
+
+  if (bookingDateInput) {
+    const today = new Date();
+
+    const yyyy = today.getFullYear();
+
+    const mm = String(
+      today.getMonth() + 1
+    ).padStart(2, "0");
+
+    const dd = String(
+      today.getDate()
+    ).padStart(2, "0");
+
+    bookingDateInput.min =
+      `${yyyy}-${mm}-${dd}`;
   }
 });
 
