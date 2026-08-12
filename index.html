@@ -323,11 +323,50 @@
           name="form_started_at"
           id="form-started-at"
         >
-        <input type="text" name="name" placeholder="Full Name" required>
-        <input type="tel" name="phone" placeholder="Phone Number" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="text" name="from" id="booking-from" placeholder="From" required>
-        <input type="text" name="to" id="booking-to" placeholder="To" required>
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          minlength="2"
+          maxlength="60"
+          autocomplete="name"
+          required
+        >
+
+        <input
+          type="tel"
+          name="phone"
+          placeholder="+372 5555 5555"
+          autocomplete="tel"
+          required
+        >
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          maxlength="254"
+          autocomplete="email"
+          required
+        >
+
+        <input
+          type="text"
+          name="from"
+          id="booking-from"
+          placeholder="From"
+          maxlength="150"
+          required
+        >
+
+        <input
+          type="text"
+          name="to"
+          id="booking-to"
+          placeholder="To"
+          maxlength="150"
+          required
+        >
         <input type="date" name="date" required>
         <input type="time" name="time" required>
         <select name="car-type">
