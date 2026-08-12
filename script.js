@@ -285,28 +285,73 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  const bookingDateInput =
-    document.querySelector(
-      '#booking-form input[name="date"]'
-    );
+const bookingDateInput =
+  document.querySelector(
+    '#booking-form input[name="date"]'
+  );
 
-  if (bookingDateInput) {
-    const today = new Date();
+const bookingTimeInput =
+  document.querySelector(
+    '#booking-form input[name="time"]'
+  );
 
-    const yyyy = today.getFullYear();
+if (bookingDateInput) {
+  const getTodayString = () => {
+    const now = new Date();
 
+    const yyyy = now.getFullYear();
     const mm = String(
-      today.getMonth() + 1
+      now.getMonth() + 1
     ).padStart(2, "0");
-
     const dd = String(
-      today.getDate()
+      now.getDate()
     ).padStart(2, "0");
 
-    bookingDateInput.min =
-      `${yyyy}-${mm}-${dd}`;
-  }
-});
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const updateMinimumTime = () => {
+    if (!bookingTimeInput) {
+      return;
+    }
+
+    const today = getTodayString();
+
+    if (bookingDateInput.value === today) {
+      const now = new Date();
+
+      const hh = String(
+        now.getHours()
+      ).padStart(2, "0");
+
+      const min = String(
+        now.getMinutes()
+      ).padStart(2, "0");
+
+      bookingTimeInput.min =
+        `${hh}:${min}`;
+
+      if (
+        bookingTimeInput.value &&
+        bookingTimeInput.value <
+          bookingTimeInput.min
+      ) {
+        bookingTimeInput.value = "";
+      }
+    } else {
+      bookingTimeInput.removeAttribute("min");
+    }
+  };
+
+  bookingDateInput.min = getTodayString();
+
+  bookingDateInput.addEventListener(
+    "change",
+    updateMinimumTime
+  );
+
+  updateMinimumTime();
+}
 
 const tourDescriptions = {
   jagala: {
